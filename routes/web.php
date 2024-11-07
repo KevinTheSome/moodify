@@ -22,6 +22,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Inertia::share('Client_ID' ,env('Client_ID'));
+    Inertia::share('Client_Secret' ,env('Client_Secret'));
+    
 });
 
 require __DIR__.'/auth.php';
