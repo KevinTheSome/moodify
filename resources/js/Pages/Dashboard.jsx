@@ -2,34 +2,67 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
-import SpotifyWebApi from "spotify-web-api-node";
+import qs from "qs";
 
 export default function Dashboard() {
-    const Client_ID = usePage().props.Client_ID;
-    const Client_Secret = usePage().props.Client_Secret;
-    const [searchQuery, setSearchQuery] = useState("");
-    const [searchResults, setSearchResults] = useState([]);
+    const [playLists, setPlayLists] = useState([]);
+    const [user, setUser] = useState([]);
+    const [sapi, setSapi] = useState();
+    const [emotions, setEmotions] = useState("");
+    const Client_id = usePage().props.CLIENT_ID;
+    const Client_secret = usePage().props.CLIENT_SECRET;
 
-    console.log(Client_ID, Client_Secret);
+    const fetchAccessToken = async () => {
+        const headers = {
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
+            },
+            auth: {
+                username: Client_id,
+                password: Client_secret,
+            },
+        };
 
-    const spotifyApi = new SpotifyWebApi({
-        clientId: Client_ID,
-        clientSecret: Client_Secret,
-    });
+        const data = {
+            grant_type: "client_credentials",
+        };
 
-    useEffect(() => {
-        if (searchQuery) {
-            handleSearch();
-        }
-    }, [searchQuery]);
-    const handleSearch = async () => {
         try {
-            const results = await spotifyApi.searchTracks(searchQuery);
-            setSearchResults(results.body.tracks.items);
-        } catch (err) {
-            console.error(err);
+            const response = await axios.post(
+                "https://accounts.spotify.com/api/token",
+                qs.stringify(data),
+                headers
+            );
+            setSapi(response.data.access_token); //where we get the token
+        } catch (error) {
+            console.log(error);
         }
     };
+
+    useEffect(() => {
+        fetchAccessToken();
+    }, []);
+
+    function getEmotions() {
+        try {
+            fetch(
+                "https://api.spotify.com/v1/search?q=" +
+                    emotions +
+                    "&type=playlist&market=LV&limit=3&offset=0",
+                {
+                    headers: {
+                        Authorization: "Bearer " + sapi,
+                    },
+                }
+            )
+                .then((res) => res.json())
+                .then((data) => console.log(data));
+            // .then(() => console.log(playLists));
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     return (
         <AuthenticatedLayout
@@ -46,25 +79,7 @@ export default function Dashboard() {
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             You're logged in!
-                            <div>
-                                <input
-                                    type="text"
-                                    value={searchQuery}
-                                    onChange={(e) =>
-                                        setSearchQuery(e.target.value)
-                                    }
-                                    placeholder="Search for tracks"
-                                />
-                                <button onClick={handleSearch}>Search</button>
-                                <ul>
-                                    {searchResults.map((track) => (
-                                        <li key={track.id}>
-                                            {track.name} by{" "}
-                                            {track.artists[0].name}
-                                        </li>
-                                    ))}
-                                </ul>
-                            </div>
+                            <div>!</div>
                         </div>
                     </div>
                 </div>
