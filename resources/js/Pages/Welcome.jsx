@@ -80,6 +80,12 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         <a href="#" className="hover:text-pink-500">
                             Terms of Service
                         </a>
+                        <a href="/history" className="hover:text-pink-500">
+                            Terms of Service
+                        </a>
+                        <a href="/new-release" className="hover:text-pink-500">
+                            Terms of Service
+                        </a>
                     </div>
                     <p>© 2024 Moodify. All rights reserved.</p>
                 </footer>

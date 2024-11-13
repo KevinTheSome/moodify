@@ -1,6 +1,8 @@
 import '../css/app.css';
 import './bootstrap';
 
+import NewReleases from './Pages/NewReleases';
+
 import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
@@ -23,3 +25,12 @@ createInertiaApp({
         color: '#4B5563',
     },
 });
+function App() {
+    return (
+        <div>
+            <NewReleases />
+        </div>
+    );
+}
+
+export default App;
