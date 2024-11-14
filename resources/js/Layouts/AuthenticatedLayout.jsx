@@ -43,6 +43,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     History
                                 </NavLink>
+                               
                             </div>
                         </div>
 
