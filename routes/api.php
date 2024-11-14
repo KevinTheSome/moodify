@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\MusicController;
 use Illuminate\Support\Facades\Route;
 
@@ -7,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/spotify-token', [MusicController::class, 'getSpotifyToken']);
 Route::get('/new-releases', [MusicController::class, 'showNewReleases']);
+Route::get('/spotify/emotions', [SpotifyController::class, 'getEmotions']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/listening-history', [HistoryController::class, 'store']);

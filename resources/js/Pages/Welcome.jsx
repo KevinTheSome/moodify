@@ -38,7 +38,7 @@ export default function Welcome({ auth, laravelVersion, phpVersion }) {
                         {/* Sample Album Cover */}
                         <div className="relative">
                             <img
-                                src="album-cover.jpg"
+                                src="album-cover.jpg"   
                                 alt="Album Cover"
                                 className="rounded-lg shadow-lg hover:shadow-pink-600/50 transition duration-300"
                             />
