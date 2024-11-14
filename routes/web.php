@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
 use Illuminate\Foundation\Application;
