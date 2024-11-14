@@ -18,6 +18,10 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard',['CLIENT_ID'=>env('CLIENT_ID'),'CLIENT_SECRET'=>env('CLIENT_SECRET')]);
 })->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/NewReleases', function () {
+    return Inertia::render('NewReleases',['CLIENT_ID'=>env('CLIENT_ID'),'CLIENT_SECRET'=>env('CLIENT_SECRET')]);
+})->middleware(['auth', 'verified'])->name('NewReleases');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
