@@ -21,7 +21,7 @@ Route::get('/dashboard', function () {
 Route::get('/NewReleases', function () {
     return Inertia::render('NewReleases',['CLIENT_ID'=>env('CLIENT_ID'),'CLIENT_SECRET'=>env('CLIENT_SECRET')]);
 })->middleware(['auth', 'verified'])->name('NewReleases');
-Route::get('/spotify/emotions', [SpotifyController::class, 'getEmotions']);
+Route::post('/spotify/emotions', [SpotifyController::class, 'getEmotions']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
