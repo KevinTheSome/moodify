@@ -12,7 +12,7 @@ class MusicController extends Controller
     {
         $this->spotifyService = $spotifyService;
     }
-    public function getSpotifyToken()
+    public function getSpotifyToken() 
 {
     $clientId = config('services.spotify.client_id');
     $clientSecret = config('services.spotify.client_secret');
@@ -31,12 +31,11 @@ class MusicController extends Controller
 
     return response()->json(['error' => 'Failed to fetch Spotify token'], 500);
 }
-    public function showNewReleases()
+    public function NewReleases()
     {
         $newReleases = $this->spotifyService->getNewReleases();
         
         return response()->json($newReleases);
     }
-
 
 }

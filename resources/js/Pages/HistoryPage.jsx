@@ -7,7 +7,7 @@ const HistoryPage = () => {
 
     useEffect(() => {
         // Fetch the listening history from the API
-        fetch('/api/listening-history')
+        fetch('/listening-history')
             .then(response => {
                 if (!response.ok) throw new Error('Failed to fetch history');
                 return response.json();

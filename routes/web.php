@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\MusicController;
 use App\Http\Controllers\SpotifyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HistoryController;
@@ -18,9 +19,20 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard',['CLIENT_ID'=>env('CLIENT_ID'),'CLIENT_SECRET'=>env('CLIENT_SECRET')]);
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/NewReleases', function () {
-    return Inertia::render('NewReleases',['CLIENT_ID'=>env('CLIENT_ID'),'CLIENT_SECRET'=>env('CLIENT_SECRET')]);
-})->middleware(['auth', 'verified'])->name('NewReleases');
+
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/NewReleases', function () {
+        return Inertia::render('NewReleases');
+    })->name('NewReleases');
+
+    Route::post('/spotify/new-releases', [SpotifyController::class, 'getNewReleases']);
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::post('/listening-history', [HistoryController::class, 'store']);
+    Route::get('/listening-history', [HistoryController::class, 'index']); // Use index() here
+});
+// Route::post('/spotify/new-releases', [MusicController::class, 'newReleases']);
 Route::post('/spotify/emotions', [SpotifyController::class, 'getEmotions']);
 
 Route::middleware('auth')->group(function () {

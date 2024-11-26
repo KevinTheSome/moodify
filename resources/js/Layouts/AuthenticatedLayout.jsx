@@ -13,14 +13,15 @@ export default function AuthenticatedLayout({ header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="border-b border-gray-100 bg-[#191414]">
+     <nav className="" style={{ backgroundColor: '#6E257D ' }}>
+
+
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 justify-between">
                         <div className="flex">
                             <div className="flex shrink-0 items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
+                            <h1 className='text-white font-bold text-xl hover:text-blue-300 animate-pulse'>Moodify</h1>
+
                             </div>
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -31,12 +32,14 @@ export default function AuthenticatedLayout({ header, children }) {
                                 >
                                     Dashboard 
                                 </NavLink>
+
                                 <NavLink
                                     href={route('NewReleases')}
                                     active={route().current('NewReleases')}
                                 >
                                     New Releases
                                 </NavLink>
+                                
                                 <NavLink
                                     href={route('history')}
                                     active={route().current('history')}

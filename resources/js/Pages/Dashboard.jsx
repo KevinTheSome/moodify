@@ -30,7 +30,6 @@ export default function Dashboard() {
         // Apply overflow-hidden to body
         document.body.style.overflow = "hidden";
 
-        // Cleanup: remove overflow-hidden when component is unmounted
         return () => {
             document.body.style.overflow = "";
         };
@@ -98,21 +97,18 @@ export default function Dashboard() {
             <div
                 className="relative py-12 bg-cover bg-center min-h-screen"
                 style={{
-                    backgroundImage: "url(/images/bg3.jpg)",
+                    backgroundImage: "url(/images/hoe11.jpg)",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}
             >
-                <div className="absolute inset-0 bg-black bg-opacity-60"></div>
+                <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
                 <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
                     <div className="bg-[#191414] bg-opacity-45 p-12 rounded-lg shadow-lg text-center">
                         <h3 className="text-4xl font-semibold text-white">
-                            Welcome to Your Dashboard!
+                            Welcome to Your Mood Generated Playlist maker!
                         </h3>
-                        <p className="mt-4 text-xl text-white">
-                            You're logged in and ready to explore!
-                        </p>
 
                         <div className="mt-8">
                             <div>
