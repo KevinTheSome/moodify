@@ -1,18 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import PlayListCard from "@/Components/PlayListCard"; // Import the PlayListCard component
 
 export default function Dashboard() {
-    const [mood, setMood] = useState('');
+    const [mood, setMood] = useState("");
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        document.body.style.overflow = 'hidden';
+        // Apply overflow-hidden to body
+        document.body.style.overflow = "hidden";
 
         return () => {
-            document.body.style.overflow = '';
+            document.body.style.overflow = "";
         };
     }, []);
 
@@ -24,11 +25,18 @@ export default function Dashboard() {
         if (!mood) return;
         setLoading(true);
         try {
-            const response = await fetch(`/spotify/emotions?emotion=${mood}`);
+            const response = await fetch(`/spotify/emotions`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ emotion: mood }),
+            });
             const data = await response.json();
             setPlaylists(data.playlists || []); // Assuming the playlists are returned here
+            console.log(data);
         } catch (error) {
-            console.error('Error fetching playlists:', error);
+            console.error("Error fetching playlists:", error);
         } finally {
             setLoading(false);
         }
@@ -78,21 +86,28 @@ export default function Dashboard() {
                         </div>
 
                         {/* Display loading state */}
-                        {loading && <p className="text-white mt-4">Loading playlists...</p>}
+                        {loading && (
+                            <p className="text-white mt-4">
+                                Loading playlists...
+                            </p>
+                        )}
 
                         {/* Display playlist cards */}
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
                             {playlists.length > 0 ? (
                                 playlists.map((playlist) => (
-                                    <PlayListCard 
-                                        key={playlist.id}
-                                        name={playlist.name}
-                                        images={playlist.images[0]}
-                                        external_links={playlist.external_urls}
-                                    />
+                                    // <PlayListCard
+                                    //     key={playlist.id}
+                                    //     name={playlist.name}
+                                    //     images={playlist.images[0]}
+                                    //     external_links={playlist.external_urls}
+                                    // />
+                                    <p>ello o/</p>
                                 ))
                             ) : (
-                                <p className="text-white">No playlists found for this mood.</p>
+                                <p className="text-white">
+                                    No playlists found for this mood.
+                                </p>
                             )}
                         </div>
                     </div>
@@ -101,3 +116,4 @@ export default function Dashboard() {
         </AuthenticatedLayout>
     );
 }
+;
