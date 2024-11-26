@@ -1,12 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
-import PlayListCard from "@/Components/PlayListCard"; // Import the PlayListCard component
+import Webcam from "react-webcam";
+// import PlayListCard from "@/Components/PlayListCard"; // Import the PlayListCard component
 
 export default function Dashboard() {
     const [mood, setMood] = useState("");
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const videoConstraints = {
+        width: 1280,
+        height: 720,
+        facingMode: "user",
+    };
+
+    function getEmotions(imageBlob) {
+        useEffect(() => {
+            const formData = new FormData();
+            formData.append("file", imageBlob);
+            fetch("http://127.0.0.1:6969/predict", {
+                method: "POST",
+                body: formData,
+            }).then((response) => response.json());
+        }, []);
+    }
 
     useEffect(() => {
         // Apply overflow-hidden to body
@@ -17,6 +35,28 @@ export default function Dashboard() {
             document.body.style.overflow = "";
         };
     }, []);
+
+    const WebcamCapture = () => (
+        <Webcam
+            audio={false}
+            height={720}
+            screenshotFormat="image/jpeg"
+            width={1280}
+            videoConstraints={videoConstraints}
+        >
+            {({ getScreenshot }) => (
+                <button
+                    onClick={() => {
+                        const imageSrc = getScreenshot();
+                        getEmotions(imageSrc);
+                    }}
+                    className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md"
+                >
+                    Capture photo
+                </button>
+            )}
+        </Webcam>
+    );
 
     const handleMoodChange = (e) => {
         setMood(e.target.value);
@@ -75,6 +115,10 @@ export default function Dashboard() {
                         </p>
 
                         <div className="mt-8">
+                            <div>
+                                <WebcamCapture />
+                                <input type="file" name="" id="" />
+                            </div>
                             <input
                                 type="text"
                                 value={mood}
@@ -121,4 +165,3 @@ export default function Dashboard() {
         </AuthenticatedLayout>
     );
 }
-1;
