@@ -8,6 +8,7 @@ export default function Dashboard() {
     const [mood, setMood] = useState("");
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [imigeBlob, setImageBlob] = useState(null);
 
     const videoConstraints = {
         width: 1280,
@@ -15,16 +16,14 @@ export default function Dashboard() {
         facingMode: "user",
     };
 
-    function getEmotions(imageBlob) {
-        useEffect(() => {
-            const formData = new FormData();
-            formData.append("file", imageBlob);
-            fetch("http://127.0.0.1:6969/predict", {
-                method: "POST",
-                body: formData,
-            }).then((response) => response.json());
-        }, []);
-    }
+    useEffect(() => {
+        const formData = new FormData();
+        formData.append("file", imigeBlob);
+        fetch("http://127.0.0.1:6969/predict", {
+            method: "POST",
+            body: formData,
+        }).then((response) => response.json());
+    }, [imigeBlob]);
 
     useEffect(() => {
         // Apply overflow-hidden to body
@@ -47,7 +46,7 @@ export default function Dashboard() {
                 <button
                     onClick={() => {
                         const imageSrc = getScreenshot();
-                        getEmotions(imageSrc);
+                        setImageBlob(imageSrc);
                     }}
                     className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md"
                 >
