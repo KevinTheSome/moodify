@@ -12,7 +12,7 @@ class MusicController extends Controller
     {
         $this->spotifyService = $spotifyService;
     }
-    public function getSpotifyToken()
+    public function getSpotifyToken() 
 {
     $clientId = config('services.spotify.client_id');
     $clientSecret = config('services.spotify.client_secret');
