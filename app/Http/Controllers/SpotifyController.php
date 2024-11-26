@@ -58,5 +58,15 @@ class SpotifyController extends Controller
     
         return response()->json(['playlists' => $formattedPlaylists]);
     }
+    public function getNewReleases()
+    {
+        $accessToken = $this->getToken();
 
+        $response = Http::withToken($accessToken)->get('https://api.spotify.com/v1/browse/new-releases', [
+            'country' => 'US',
+            'limit' => 10,
+        ]);
+
+        return $response->json();
+    }
 }
