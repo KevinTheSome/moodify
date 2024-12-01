@@ -8,7 +8,7 @@ export default function Dashboard() {
     const [mood, setMood] = useState("");
     const [playlists, setPlaylists] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [imigeBlob, setImageBlob] = useState(null);
+    const [imigeBase64, setImigeBase64] = useState(null);
 
     const videoConstraints = {
         width: 1280,
@@ -17,13 +17,29 @@ export default function Dashboard() {
     };
 
     useEffect(() => {
+        if (!imigeBase64) return;
         const formData = new FormData();
-        formData.append("file", imigeBlob);
+        var imigeData = imigeBase64.replace(/^data:image\/\w+;base64,/, "");
+        var byteCharacters = atob(imigeData); // Decode Base64 string
+        var byteNumbers = new Array(byteCharacters.length);
+        for (var i = 0; i < byteCharacters.length; i++) {
+            byteNumbers[i] = byteCharacters.charCodeAt(i);
+        }
+        var file = new Blob([new Uint8Array(byteNumbers)], {
+            type: "image/jpeg",
+        });
+
+        formData.append("file", file);
+
         fetch("http://127.0.0.1:6969/predict", {
             method: "POST",
             body: formData,
-        }).then((response) => response.json());
-    }, [imigeBlob]);
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                setMood(data.result);
+            });
+    }, [imigeBase64]);
 
     useEffect(() => {
         // Apply overflow-hidden to body
@@ -46,7 +62,7 @@ export default function Dashboard() {
                 <button
                     onClick={() => {
                         const imageSrc = getScreenshot();
-                        setImageBlob(imageSrc);
+                        setImigeBase64(imageSrc);
                     }}
                     className="ml-4 px-4 py-2 bg-blue-500 text-white rounded-md"
                 >

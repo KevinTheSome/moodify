@@ -1,9 +1,16 @@
-
+import base64
 from deepface import DeepFace
-from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi import FastAPI, File, Form, UploadFile, HTTPException
 
 
 app = FastAPI()
+
+
+def base64_to_image_file(base64_string):
+    base64.b64decode(base64_string)
+    imgFile = open('storage/app/private/image.jpg', 'wb')
+    imgFile.write(base64_string)
+    imgFile.close()
 
 
 def run_picture_deepface(picture):
@@ -24,6 +31,7 @@ def run_picture_deepface(picture):
 @app.post('/predict')
 async def upload(file: UploadFile = File(...)):
     result = ""
+
     try:
         with open(f"storage/app/private/{file.filename}", 'wb') as f:
             while contents := file.file.read(1024 * 1024):
@@ -37,6 +45,7 @@ async def upload(file: UploadFile = File(...)):
         file.file.close()
 
     return {'success':f"Successfully uploaded {file.filename}", 'result':str(result)}
+
 
 
 
