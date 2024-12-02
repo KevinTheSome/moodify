@@ -12,15 +12,13 @@ class HistoryController extends Controller
     public function store(Request $request)
     {  
         $validated = $request->validate([
-            'title' => 'required|string',
-            'artist' => 'nullable|string',
+           'music_playlists' => 'required|string',
             'listened_at' => 'nullable|date',
         ]);
 
         $history = History::create([
             'user_id' => Auth::id(),
-            'title' => $validated['title'],
-            'artist' => $validated['artist'] ?? null,
+            'music_playlists' => $validated['music_playlists'],
             'listened_at' => $validated['listened_at'] ?? now(),
         ]);
 

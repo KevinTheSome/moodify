@@ -9,5 +9,5 @@ class History extends Model
     {
         use HasFactory;
     
-        protected $fillable = ['user_id', 'title', 'artist', 'listened_at'];
+        protected $fillable = ['user_id', 'listened_at', "music_playlists"];
     }

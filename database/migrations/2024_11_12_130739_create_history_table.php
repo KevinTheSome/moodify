@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id'); // Assumes user is logged in
-            $table->unsignedBigInteger('music_id'); // References the music
+            $table->json('music_playlists'); // References the music
             $table->timestamp('listened_at')->useCurrent();
             $table->timestamps();
             

@@ -35,15 +35,4 @@ class SpotifyService
     return $token;
 }
 
-    public function getNewReleases()
-    {
-        $accessToken = $this->getAccessToken();
-
-        $response = Http::withToken($accessToken)->get('https://api.spotify.com/v1/browse/new-releases', [
-            'country' => 'US',
-            'limit' => 10,
-        ]);
-
-        return $response->json();
-    }
 }

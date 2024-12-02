@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use App\Models\History;
+use Illuminate\Support\Facades\Auth;
 class SpotifyController extends Controller
 {
 
@@ -54,6 +55,12 @@ class SpotifyController extends Controller
                 array_push($finalArray, $playlist);
             }
         }
+
+        $history = new History();
+        $history->user_id = Auth::id();
+        $history->music_playlists = json_encode($finalArray);
+        $history->listened_at = now();
+        $history->save();
 
         return $finalArray;
     }

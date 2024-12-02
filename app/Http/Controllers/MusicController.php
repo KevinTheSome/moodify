@@ -31,11 +31,6 @@ class MusicController extends Controller
 
     return response()->json(['error' => 'Failed to fetch Spotify token'], 500);
 }
-    public function NewReleases()
-    {
-        $newReleases = $this->spotifyService->getNewReleases();
-        
-        return response()->json($newReleases);
-    }
+    
 
 }
