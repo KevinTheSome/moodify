@@ -40,30 +40,29 @@ class SpotifyController extends Controller
             'q' => $emotion,
             'type' => 'playlist',
             'market' => 'LV',
-            'limit' => 3,
-            'offset' => 0,
+            'limit' => 5,
+            'offset' => rand(0, 50),
         ]);
-    
-        $playlists = $response->json()['playlists']['items'];
-    
-        // Format the data to be used in the frontend
-        $formattedPlaylists = array_map(function ($playlist) {
-            return [
-                'id' => $playlist['id'],
-                'name' => $playlist['name'],
-                'images' => $playlist['images'][0] ?? null,
-                'external_urls' => $playlist['external_urls']['spotify'],
-            ];
-        }, $playlists);
-    
-        return response()->json(['playlists' => $formattedPlaylists]);
+
+        // return $response->json()['playlists']['items'];
+
+        $finalArray = [];
+        $response->json()['playlists']['items'];
+
+        foreach ($response->json()['playlists']['items'] as $playlist) {
+            if($playlist != null){
+                array_push($finalArray, $playlist);
+            }
+        }
+
+        return $finalArray;
     }
     public function getNewReleases()
     {
         $accessToken = $this->getToken();
 
         $response = Http::withToken($accessToken)->get('https://api.spotify.com/v1/browse/new-releases', [
-            'country' => 'US',
+            'country' => 'LV',
             'limit' => 10,
         ]);
 
