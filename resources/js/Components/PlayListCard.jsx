@@ -6,7 +6,7 @@ const PlayListCard = (props) => {
             href={props.external_links.spotify} 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="block max-w-sm rounded-lg overflow-hidden shadow-lg transform hover:scale-105 transition-transform duration-300"
+            className="block max-w-sm rounded-lg overflow-hidden "
         >
             <div className="p-4 bg-gray-800 text-white">
                 <h1 className="text-lg font-semibold mb-2">{props.name}</h1>

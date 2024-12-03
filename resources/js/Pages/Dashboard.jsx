@@ -142,16 +142,16 @@ export default function Dashboard() {
             <Head title="Dashboard" />
 
             <div
-                className="relative py-12 bg-cover bg-center min-h-screen"
+                className="relative py-12  min-h-screen"
                 style={{
                     backgroundImage: "url(/images/hoe11.jpg)",
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                 }}
             >
-                <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+                <div className="absolute inset-0 bg-[#6E257D] bg-opacity-40"></div>
 
-                <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8 space-y-8">
+                <div className="relative z-10 mx-auto max-w-7xl px-6  ">
                     <div className="bg-[#191414] bg-opacity-45 p-12 rounded-lg shadow-lg text-center">
                         <h3 className="text-4xl font-semibold text-white">
                             Welcome to Your Mood Generated Playlist maker!

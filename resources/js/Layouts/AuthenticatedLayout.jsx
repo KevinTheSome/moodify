@@ -24,10 +24,11 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             </div>
 
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="hidden space-x-8  sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
+                                    className="text-gray-300 hover:text-white transition-colors duration-200"
                                    
                                 >
                                     Dashboard 
@@ -36,6 +37,8 @@ export default function AuthenticatedLayout({ header, children }) {
                                 <NavLink
                                     href={route('NewReleases')}
                                     active={route().current('NewReleases')}
+                                    className="text-gray-300 hover:text-white transition-colors duration-200"
+
                                 >
                                     New Releases
                                 </NavLink>
